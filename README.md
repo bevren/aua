@@ -4,11 +4,19 @@ First make sure you have adb installed on your computer.
 
 Then, prepare an Android phone (not two) with Developer Options enabled, connect it to the computer, and make sure you can see the connected device by running `adb devices`.
 
-Clone the repo `git clone https://github.com/bevren/aua.git`
+Clone the repo 
+
+``` bash 
+git clone https://github.com/bevren/aua.git
+```
 
 Cd into repo.
 
-Run `python -m pip install -r requirements.txt` to install requirements.
+Run to install requirements.
+
+``` bash 
+python -m pip install -r requirements.txt
+``` 
 
 Open `llm_config.json`. Fill in values.
 
@@ -25,7 +33,10 @@ Open `llm_config.json`. Fill in values.
 }
 ```
 
-Run `python main.py`
+Start the application
+``` bash 
+python main.py
+```
 
 
 
