@@ -1,7 +1,7 @@
 {
-	"base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
-	"api_key": "AIzaSyAUdWtZDqdGXgsikucMIUGR3BSNWOOm_Os",
-	"model_name": "gemini-2.0-flash",
+	"base_url": "",
+	"api_key": "",
+	"model_name": "",
 	"reasoning_effort": "",
 	"temperature": 1,
 	"use_vision": false,
