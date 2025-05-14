@@ -12,7 +12,7 @@ Run `python -m pip install -r requirements.txt` to install requirements.
 
 Open `llm_config.json`. Fill in values.
 
-```json
+``` jsonc
 {
 	"base_url": "", // leave empty for openai.
 	"api_key": "",
