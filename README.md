@@ -6,7 +6,7 @@ Then, prepare an Android phone (not two) with Developer Options enabled, connect
 
 Clone the repo 
 
-``` bash 
+```bash 
 git clone https://github.com/bevren/aua.git
 ```
 
@@ -14,13 +14,13 @@ Cd into repo.
 
 Run to install requirements.
 
-``` bash 
-python -m pip install -r requirements.txt
+```bash 
+pip install -r requirements.txt
 ``` 
 
 Open `llm_config.json`. Fill in values.
 
-``` jsonc
+```jsonc
 {
 	"base_url": "", // leave empty for openai.
 	"api_key": "",
@@ -34,8 +34,15 @@ Open `llm_config.json`. Fill in values.
 ```
 
 Start the application
-``` bash 
+```bash 
 python main.py
+```
+
+Access web application via browser address as shown in terminal window.
+
+```terminal
+[HTTP] Serving frontend at http://localhost:8000
+[WS] WebSocket server running on ws://localhost:8765
 ```
 
 

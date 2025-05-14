@@ -58,12 +58,17 @@ class LlmClient():
             with open("llm_config.json") as f:
                 self.config = json.loads(f.read())
 
-            self.client = OpenAI(
-                api_key=self.config["api_key"],
-                base_url=self.config["base_url"]
-            )
+            if self.config["base_url"] != "":
+                self.client = OpenAI(
+                    api_key=self.config["api_key"],
+                    base_url=self.config["base_url"]
+                )
+            else:
+                self.client = OpenAI(
+                    api_key=self.config["api_key"]
+                )
         
-            # print(self.client)
+            
 
         except Exception as e:
             print(traceback.format_exc())
