@@ -170,10 +170,10 @@ def get_tools():
 
 def construct_event_stream(state, show_clickables=False):
 
-    event_stream = ""
+    clickables = ""
 
     if show_clickables:
-        event_stream += "<clickables>\n"
+        clickables += "<clickables>\n"
 
         keys_to_remove = {'coordinate_x', 'coordinate_y', 'left', 'right', 'top', 'bottom'}    
         filtered = [
@@ -185,11 +185,12 @@ def construct_event_stream(state, show_clickables=False):
         for elem in filtered:
             to_jsonl += json.dumps(elem) + "\n"
 
-        event_stream += to_jsonl
+        clickables += to_jsonl
 
-        event_stream += "</clickables>\n\n"
+        clickables += "</clickables>\n\n"
 
-    event_stream += "<event_stream>\n"
+    event_stream = ""
+    
 
     for message in state["messages"]:
         if message["role"] == "user":
@@ -236,7 +237,6 @@ def construct_event_stream(state, show_clickables=False):
 
 
     state["shell_sessions"] = remaining_sessions
-    event_stream += "</event_stream>"
     event_stream_length = len(event_stream)
     max_size = state.get("max_event_stream_size")
 
@@ -245,8 +245,9 @@ def construct_event_stream(state, show_clickables=False):
             diff = event_stream_length - max_size
             event_stream = event_stream[diff:]
 
-    print(event_stream)
-    return event_stream
+    final_event_stream = f"<event_stream>\n{event_stream}\n</event_stream>"
+    print(final_event_stream)
+    return clickables + final_event_stream
 
 
 def get_mime_type(path):
