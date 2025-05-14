@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AUA</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+    <script defer type="text/javascript" src="app.js"></script>
+</head>
+<body>
+
+    
+    
+    <div class="container">
+        <div id="left" class="left">
+        	<div id="main" class="left-container">
+	            <h2 id="ss-status">Not connected...</h2>
+	        	<div id="wrapper" class="wrapper" tabindex="0">
+	            	<canvas id="swipe-canvas"></canvas>
+	            	<img style="pointer-events:none;" id="screenshot" />
+	            </div>
+	            
+	            <div class="device-button-group hidden">
+	            	<button id="take-control" class="icon-button circle"  data-tooltip="Take Control" has-control="false" tooltip-direction="left" data-size="lg">
+	            		<div class="spinner-button"></div>
+	            		<div style="display: flex;" id="icon-wrapper">
+	            			<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-176c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 272c0 1.5 0 3.1 .1 4.6L67.6 283c-16-15.2-41.3-14.6-56.6 1.4s-14.6 41.3 1.4 56.6L124.8 448c43.1 41.1 100.4 64 160 64l19.2 0c97.2 0 176-78.8 176-176l0-208c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 112c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-176c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 176c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208z"/></svg>
+	            		</div>
+	            	</button>
+	            </div>
+            </div>
+
+            <div id="shell" class="left-container hidden">
+            	
+            	<div class="shell-input">
+            		
+            	</div>
+            	
+            	<div class="shell-output">
+            	</div>
+            </div>
+
+            <div id="file" class="left-container hidden">
+
+            	
+
+            	<span id="file_path"></span>
+            	<div id="file_content"></div>
+            </div>
+
+            <div id="showMainBtn" class="icon-button circle showMain tooltip-black hidden" data-tooltip="Close" tooltip-direction="down" data-size="sm">
+            	<svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+            </div>
+
+            <div class="" style="right:-230px;" id="conversation-list-container" data-open="false">
+            	<div id="conversation-list">
+	            	<div class="conversation-list-header">
+	            		<span>Conversations</span>
+	            	</div>
+	            	<div class="conversation-list-body">
+	            		
+	            	</div>
+            	</div>
+            </div>
+        </div>
+        <div id="right" class="right">
+
+            <div class="chat-app">
+                <div class="device-controls">
+                    <div style="display:flex; gap: 12px; margin-left: 16px;" class="hidden" id="conversation-controls">
+                    	<button class="icon-button bg-transparent tooltip-black" data-tooltip="Conversations" tooltip-direction="down" id="list-conversations-btn" data-size="sm">
+	                    	<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l448 0c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80zM0 96C0 60.7 28.7 32 64 32l448 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm96 64a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm104 0c0-13.3 10.7-24 24-24l224 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-224 0c-13.3 0-24-10.7-24-24zm0 96c0-13.3 10.7-24 24-24l224 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-224 0c-13.3 0-24-10.7-24-24zm0 96c0-13.3 10.7-24 24-24l224 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-224 0c-13.3 0-24-10.7-24-24zm-72-64a32 32 0 1 1 0-64 32 32 0 1 1 0 64zM96 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/></svg>
+	                    </button>
+	                    <button class="icon-button bg-transparent tooltip-black" data-tooltip="New Chat" tooltip-direction="down" id="new-chat-btn" data-size="sm">
+	                    	<svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"/></svg>
+	                    </button>
+                    	
+                    </div>
+                    <div class="status-wrapper">
+                    	<div style="display:flex; gap: 0.5rem; margin-right: 16px;">
+	                    	<select id="device-select">
+		                        <option value="">Select a device</option>
+		                        <option value="">Select a device</option>
+		                        <option value="">Select a device</option>
+	                    	</select>
+		                    <button class="icon-button bg-transparent tooltip-black" data-tooltip="Connect" tooltip-direction="down" id="connect-device-btn" data-size="sm">
+		                    	<svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M96 0C78.3 0 64 14.3 64 32l0 96 64 0 0-96c0-17.7-14.3-32-32-32zM288 0c-17.7 0-32 14.3-32 32l0 96 64 0 0-96c0-17.7-14.3-32-32-32zM32 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l0 32c0 77.4 55 142 128 156.8l0 67.2c0 17.7 14.3 32 32 32s32-14.3 32-32l0-67.2C297 398 352 333.4 352 256l0-32c17.7 0 32-14.3 32-32s-14.3-32-32-32L32 160z"/></svg>
+		                    </button>
+		                    <button class="icon-button bg-transparent tooltip-black" data-tooltip="Refresh Device List" tooltip-direction="down" data-size="sm" id="refresh-device-btn">
+		                    	<svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M105.1 202.6c7.7-21.8 20.2-42.3 37.8-59.8c62.5-62.5 163.8-62.5 226.3 0L386.3 160 352 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l111.5 0c0 0 0 0 0 0l.4 0c17.7 0 32-14.3 32-32l0-112c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 35.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5zM39 289.3c-5 1.5-9.8 4.2-13.7 8.2c-4 4-6.7 8.8-8.1 14c-.3 1.2-.6 2.5-.8 3.8c-.3 1.7-.4 3.4-.4 5.1L16 432c0 17.7 14.3 32 32 32s32-14.3 32-32l0-35.1 17.6 17.5c0 0 0 0 0 0c87.5 87.4 229.3 87.4 316.7 0c24.4-24.4 42.1-53.1 52.9-83.8c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.5 62.5-163.8 62.5-226.3 0l-.1-.1L125.6 352l34.4 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L48.4 288c-1.6 0-3.2 .1-4.8 .3s-3.1 .5-4.6 1z"/></svg>
+		                    </button>
+	                	</div>
+
+	                	<div style="display:flex; align-items: center;">
+				        	<div id="status-indicator"></div>
+				        	<p id="status">Connecting...</p>
+				        </div>
+				    </div>
+                </div>
+            	
+                <div id="messages" class="messages"></div>
+                <div class="input-group">
+                	<div class="top-input"></div>
+                    <textarea id="chat-input" disabled placeholder="Type a message..." autocomplete="off"></textarea>
+                    <div class="input-button-group">
+                    	<button id="send-btn" disabled class="icon-button circle tooltip-black" data-tooltip="Send" tooltip-direction="up" data-reverse data-size="md">
+                    		<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2 160 448c0 17.7 14.3 32 32 32s32-14.3 32-32l0-306.7L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>
+                    	</button>
+
+                    	<button id="agent-state-btn" class="icon-button circle tooltip-black hidden" data-tooltip="Stop Agent" tooltip-direction="up" data-reverse data-size="md" data-state="stop">
+                    		<div class="spinner-button sm"></div>
+                    		<div style="display: flex;" id="icon-wrapper">
+	            			<svg style="margin-left: 2px;" class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80L0 432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg>
+	            			</div>
+                    	</button>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal hidden" id="delete-modal">
+		<div class="modal-content">
+		  	<!-- <span class="close-btn" id="modal-close">&times;</span> -->
+		  	<div class="modal-header">
+		  		<span class="modal-title">Delete Conversation</span>
+		  	</div>
+		  	<div id="modal-output" class="modal-body">
+		  		<span id="modal-conversation-name" style="font-weight: 500; color: white;">Test</span> will be removed.
+		  	</div>
+		  	<div class="modal-footer">
+		  		<div class="modal-button-group">
+		  			<button id="model-cancel-button" class="modal-button">Cancel</button>
+		  			<button id="model-delete-button" class="modal-button danger">Delete</button>
+		  		</div>
+		  	</div>
+		</div>
+	</div>
+
+</body>
+</html>

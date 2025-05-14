@@ -1,0 +1,10 @@
+# Created by venv; see https://docs.python.org/3/library/venv.html
+*.db
+__pycache__
+Lib
+Include
+Scripts
+
+pyvenv.cfg
+termux-app_v0.118.2+github-debug_universal.apk
+

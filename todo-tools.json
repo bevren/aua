@@ -1,0 +1,69 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "file_str_replace",
+      "description": "Replace specified string in a file. Use for updating specific content in files or fixing errors in code.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "description": "Absolute path of the file to perform replacement on"
+          },
+          "old_str": {
+            "type": "string",
+            "description": "Original string to be replaced"
+          },
+          "new_str": {
+            "type": "string",
+            "description": "New string to replace with"
+          }
+        },
+        "required": ["file", "old_str", "new_str"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "file_find_in_content",
+      "description": "Search for matching text within file content. Use for finding specific content or patterns in files.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "description": "Absolute path of the file to search within"
+          },
+          "regex": {
+            "type": "string",
+            "description": "Regular expression pattern to match"
+          }
+        },
+        "required": ["file", "regex"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "file_find_by_name",
+      "description": "Find files by name pattern in specified directory. Use for locating files with specific naming patterns.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Absolute path of directory to search"
+          },
+          "glob": {
+            "type": "string",
+            "description": "Filename pattern using glob syntax wildcards"
+          }
+        },
+        "required": ["path", "glob"]
+      }
+    }
+  }
+]
