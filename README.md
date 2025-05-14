@@ -1,5 +1,9 @@
 # AUA(Android Use Agent)
 
+https://github.com/user-attachments/assets/c60825e2-0a59-4d4d-a947-617250fa3a76
+
+## Installation
+
 First make sure you have adb installed on your computer.
 
 Then, prepare an Android phone (not two) with Developer Options enabled, connect it to the computer, and make sure you can see the connected device by running `adb devices`.
