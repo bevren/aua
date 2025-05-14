@@ -37,7 +37,9 @@ Open `llm_config.json`. Fill in values.
 }
 ```
 
-Start the application
+## Start the application
+
+Run
 ```bash 
 python main.py
 ```
