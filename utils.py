@@ -117,11 +117,11 @@ class LlmClient():
                 "role": "user",
                 "content": [
                     {
-                        "type": "text",
+                        "type": "input_text",
                         "text": event_stream
                     },
                     {
-                        "type": "image_url",
+                        "type": "input_image",
                         "image_url": {
                             "url": f"data:image/jpeg;base64,{base64_image}"
                         }
