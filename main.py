@@ -270,10 +270,7 @@ async def install_apps(device, websocket):
 
     valid_python = True
 
-    print("Updating packages using pkg upgrade")
-    _, _, _ = await run_termux("pkg upgrade", device.serial)
-    await websocket.send(json.dumps({"type": "info", "data": "Updating packages using pkg upgrade..."}))
-
+    
     print("Checking for python...")
     await websocket.send(json.dumps({"type": "info", "data": "Checking for python..."}))
     stdout, stderr, returncode = await run_termux("python --version", device.serial)
@@ -283,6 +280,10 @@ async def install_apps(device, websocket):
         await websocket.send(json.dumps({"type": "info", "data": f"Python exists on device {stdout}"}))
         
     else:
+        print("Updating packages using pkg upgrade")
+        await websocket.send(json.dumps({"type": "info", "data": "Updating packages using pkg upgrade..."}))
+        _, _, _ = await run_termux("pkg upgrade", device.serial)
+    
         print("Installing python...")
         await websocket.send(json.dumps({"type": "info", "data": "Python is not detected."}))
         await websocket.send(json.dumps({"type": "info", "data": "Installing python this may take some time..."}))
